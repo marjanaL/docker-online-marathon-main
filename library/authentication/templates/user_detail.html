@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Профіль користувача #{{ target_user.id }}{% endblock %}
+
+{% block content %}
+    <div class="form-card">
+        <a href="{% url 'all_users' %}" class="btn-view">← Назад до списку користувачів</a>
+        <hr>
+        <h2>Картка користувача №{{ target_user.id }}</h2>
+        <table style="width: 100%; margin-bottom: 20px;">
+            <tbody>
+                <tr><td><strong>Прізвище:</strong></td><td>{{ target_user.last_name }}</td></tr>
+                <tr><td><strong>Ім'я:</strong></td><td>{{ target_user.first_name }}</td></tr>
+                <tr><td><strong>По батькові:</strong></td><td>{{ target_user.middle_name|default:"—" }}</td></tr>
+                <tr><td><strong>Електронна пошта (Email):</strong></td><td>{{ target_user.email }}</td></tr>
+                <tr>
+                    <td><strong>Роль у системі:</strong></td>
+                    <td>
+                        {% if target_user.role == 1 %}
+                            <span class="status-on-hand">Бібліотекар</span>
+                        {% else %}
+                            <span class="status-returned">Читач</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr><td><strong>Дата реєстрації:</strong></td><td>{{ target_user.created_at|date:"d.m.Y H:i" }}</td></tr>
+                <tr><td><strong>Останнє оновлення:</strong></td><td>{{ target_user.updated_at|date:"d.m.Y H:i" }}</td></tr>
+                <tr>
+                    <td><strong>Статус облікового запису:</strong></td>
+                    <td>
+                        {% if target_user.is_active %}
+                            <span class="status-returned">Active</span>
+                        {% else %}
+                            <span class="status-on-hand">Inactive</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div class="actions-container">
+            <a href="{% url 'user_books' target_user.id %}" class="btn-order">Переглянути книги на руках</a>
+            <a href="{% url 'edit_user' target_user.id %}" class="btn-create" style="text-decoration: none;">Редагувати профіль</a>
+        </div>
+    </div>
+{% endblock %}

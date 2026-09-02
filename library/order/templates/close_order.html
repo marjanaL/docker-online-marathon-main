@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Закриття замовлення{% endblock %}
+
+{% block content %}
+    <div class="form-card-wrapper">
+        <div class="form-card">
+            <h3>Прийняти книгу (Закриття замовлення №{{ order.id }})</h3>
+            <p>Книга: <strong>«{{ order.book.name }}»</strong></p>
+            <p>Читач: {{ order.user.email }}</p>
+            <br>
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field-block">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="form-actions-block">
+                    <button type="submit" class="btn-create">Повернення</button>
+                    <a href="{% url 'orders_list' %}" class="btn-reset">Назад до списку</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

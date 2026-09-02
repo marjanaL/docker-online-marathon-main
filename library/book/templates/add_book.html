@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Додати нову книгу{% endblock %}
+
+{% block content %}
+    <div class="form-card-wrapper">
+        <div class="form-card">
+            <h3>Додавання нової книги</h3>
+            <form method="POST" action="{% url 'add_book' %}" autocomplete="off">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field-block">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <div class="linked-badge">
+                                {{ field.help_text }}
+                            </div>
+                        {% endif %}
+                        {% if field.name == 'authors' %}
+                            <div class="linked-badge">
+                                <a href="{% url 'librarian_dashboard' %}" target="_blank" class="btn-view">Немає у списку? Додати автора</a>
+                            </div>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="form-actions-block">
+                    <button type="submit" class="btn-create">Додати книгу</button>
+                    <a href="{% url 'all_books' %}" class="btn-reset">Скасувати</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

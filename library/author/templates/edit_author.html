@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Редагування автора{% endblock %}
+
+{% block content %}
+    <div class="form-card-wrapper">
+        <div class="form-card">
+            <h3>Редагування даних автора</h3>
+            <form method="POST" autocomplete="off">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-field-block">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="field-error">
+                                {{ field.errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="form-actions-block">
+                    <button type="submit" class="btn-create">Зберегти зміни</button>
+                    <a href="{% url 'librarian_dashboard' %}" class="btn-reset">Скасувати</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
