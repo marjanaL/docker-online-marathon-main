@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -55,10 +56,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'library.urls'
 
+SETTINGS_DIR = Path(__file__).resolve().parent
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'library' /'templates'],
+        'DIRS': [
+            BASE_DIR / 'library' /'templates',
+            BASE_DIR,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,7 +95,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': '5432',
     }
 }
@@ -132,9 +137,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'library' / 'static',
+    ('library/css', BASE_DIR / 'static'),
+    ('library/css', BASE_DIR / 'library' / 'static'),
+    ('author/css', BASE_DIR / 'author' / 'static'),
+    ('authentication/css', BASE_DIR / 'authentication' / 'static'),
     BASE_DIR / 'images',
 ]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Logger required settings.
 

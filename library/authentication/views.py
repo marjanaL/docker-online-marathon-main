@@ -33,7 +33,7 @@ def register_view(request):
     else:
         form = UserRegistrationForm()
 
-    return render(request, 'authentication/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
   
 
 @librarian_required
@@ -53,7 +53,7 @@ def edit_user_view(request, user_id):
     else:
         form = UserEditForm(instance=target_user)
 
-    return render(request, 'authentication/edit_user.html', {'form': form, 'target_user': target_user})
+    return render(request, 'edit_user.html', {'form': form, 'target_user': target_user})
 
 
 def login_view(request):
@@ -76,7 +76,7 @@ def login_view(request):
         else:
             messages.error(request, "Невірний Email або пароль.")
 
-    return render(request, 'authentication/login.html')
+    return render(request, 'login.html')
 
 
 def logout_view(request):
@@ -93,7 +93,7 @@ def all_users_view(request):
     """Showing information about all users"""
     users = CustomUser.objects.all()
     
-    return render(request, 'authentication/all_users.html', {'users': users})
+    return render(request, 'all_users.html', {'users': users})
 
 
 @librarian_required

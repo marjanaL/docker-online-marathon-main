@@ -11,7 +11,7 @@ PATRONYMIC_LENGTH = 20
 def home(request):
     """Home page."""
 
-    return render(request, 'author/home.html')
+    return render(request, 'home.html')
 
 
 @librarian_required
@@ -38,7 +38,7 @@ def librarian_dashboard(request):
         'form': form
     }
 
-    return render(request, 'author/librarian_dashboard.html', context)
+    return render(request, 'librarian_dashboard.html', context)
 
 
 @librarian_required
@@ -60,7 +60,7 @@ def edit_author(request, author_id):
     else:
         form = AuthorForm(instance=author)
 
-    return render(request, 'author/edit_author.html', {'form': form, 'author': author})
+    return render(request, 'edit_author.html', {'form': form, 'author': author})
 
 @librarian_required
 def delete_author(request, author_id):

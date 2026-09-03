@@ -18,7 +18,7 @@ def orders_list_view(request):
     else:
         orders = Order.objects.select_related('book').filter(user=request.user).order_by('-created_at')
 
-    return render(request, 'order/orders_list.html', {'orders': orders})
+    return render(request, 'orders_list.html', {'orders': orders})
 
 
 def create_order_view(request, book_id):
@@ -37,7 +37,7 @@ def create_order_view(request, book_id):
         messages.error(request, "Не вдалося замовити книгу. Усі примірники на руках.")
         return redirect('all_books')
 
-    return render(request, 'order/create_order.html', {'form': form, 'book': book})
+    return render(request, 'create_order.html', {'form': form, 'book': book})
 
 
 @librarian_required
@@ -69,7 +69,7 @@ def close_order_view(request, book_id):
         initial_date = default_date.strftime('%Y-%m-%dT%H:%M')
         form = OrderCreateForm(initial={'plated_end_at': initial_date})
 
-        return render(request, 'order/create_order.html', {'form': form, 'book': book})
+        return render(request, 'create_order.html', {'form': form, 'book': book})
 
 
 @librarian_required
@@ -88,4 +88,4 @@ def close_order_view(request, order_id):
         messages.success(request, f"Замовлення №{order.id} успішно закрите.")
         return redirect('orders_list')
 
-    return render(request, 'order/close_order.html', {'form': form, 'order': order})
+    return render(request, 'close_order.html', {'form': form, 'order': order})

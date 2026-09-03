@@ -33,7 +33,7 @@ def all_books(request):
         'author_query': author_query,
     }
 
-    return render(request, 'book/all_books.html', context)
+    return render(request, 'all_books.html', context)
 
 
 def book_detail(request, book_id):
@@ -43,7 +43,7 @@ def book_detail(request, book_id):
         return redirect('home')
     book = get_object_or_404(Book.objects.prefetch_related('authors'), id=book_id)
 
-    return render(request, 'book/book_detail.html', {'book': book})
+    return render(request, 'book_detail.html', {'book': book})
 
 
 @librarian_required
@@ -56,7 +56,7 @@ def user_books(request, user_id):
         'orders': active_orders
     }
     
-    return render(request, 'book/user_books.html', context)
+    return render(request, 'user_books.html', context)
 
 
 @librarian_required
@@ -79,7 +79,7 @@ def add_book(request):
     else:
         form = BookForm()
         
-    return render(request, 'book/add_book.html', {'form': form})
+    return render(request, 'add_book.html', {'form': form})
 
 
 @librarian_required
@@ -103,4 +103,4 @@ def edit_book(request, book_id):
     else:
         form = BookForm(instance=book)
         
-    return render(request, 'book/edit_book.html', {'form': form, 'book': book})
+    return render(request, 'edit_book.html', {'form': form, 'book': book})
